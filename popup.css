@@ -1,0 +1,7 @@
+body > * {
+    margin: 4px;
+}
+
+textarea {
+    resize: none
+}
