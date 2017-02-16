@@ -1,4 +1,14 @@
 module.exports = function(grunt) {
+
+  grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-browserify');
+  grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-contrib-qunit');
+  grunt.loadNpmTasks('grunt-mkdir');
+  grunt.loadNpmTasks('grunt-contrib-compress');
+
+  require("load-grunt-tasks")(grunt); // npm install --save-dev load-grunt-tasks
+
   grunt.initConfig({
     clean: {
       prodDist: ['dist/*'],
@@ -16,7 +26,7 @@ module.exports = function(grunt) {
         }
       }
     },
-    babel: {
+    "babel": {
       options: {
         sourceMap: true,
         presets: ['es2015']
@@ -27,7 +37,7 @@ module.exports = function(grunt) {
             expand: true,
             cwd: 'app/js',
             src: ['**/*.js'],
-            dest: 'dist',
+            dest: 'dist/js',
             flatten: true
           }
         ]
@@ -44,20 +54,20 @@ module.exports = function(grunt) {
           {
             src: 'app/manifest.json',
             dest: 'dist/manifest.json'
+          },
+          {
+            cwd: 'app',
+            expand: true,
+            src: ['html/**'],
+            dest: 'dist/'
+          },
+          {
+            cwd: 'app',
+            expand: true,
+            src: ['css/**'],
+            dest: 'dist/'
           }
         ]
-      }
-    },
-    browserify: {
-      prod: {
-        src: ['dist/*.js'],
-        dest: 'dist/module.js'
-      },
-      test: {
-        src: [
-          'test/dist/emojify-test.js'
-        ],
-        dest: 'test/dist/all-tests.js'
       }
     },
     compress: {
@@ -69,7 +79,7 @@ module.exports = function(grunt) {
           {
             expand: true,
             cwd: 'dist/',
-            src: ['module.js', 'manifest.json', 'html/**', 'css/**']
+            src: ['manifest.json', 'html/**', 'css/**', 'js/**']
           }
         ]
       }
@@ -79,7 +89,6 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.loadNpmTasks('grunt-contrib-qunit');
-
-  grunt.registerTask('default', ['qunit']);
+  grunt.registerTask("default", ["clean:prodDist", "mkdir:prodDist", "babel:prod", "copy", "compress"]);
+  grunt.registerTask("test", ["babel:prod", "clean:testDist", "mkdir:testDist", "babel:test", "qunit"]);
 };
