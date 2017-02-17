@@ -6,6 +6,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-qunit');
   grunt.loadNpmTasks('grunt-mkdir');
   grunt.loadNpmTasks('grunt-contrib-compress');
+  grunt.loadNpmTasks('grunt-contrib-concat');
 
   require("load-grunt-tasks")(grunt); // npm install --save-dev load-grunt-tasks
 
@@ -70,6 +71,21 @@ module.exports = function(grunt) {
         ]
       }
     },
+//    browserify: {
+//      prod: {
+//        src: ['dist/js/twemoji-2.2.3.min.js', 'dist/js/emojify.js', 'dist/js/content.js'],
+//        dest: 'dist/js/content.js'
+//      }
+//    },
+    concat: {
+      options: {
+        separator: '\n',
+      },
+      dist: {
+        src: ['dist/js/twemoji-2.2.3.min.js', 'dist/js/emojify.js', 'dist/js/content.js'],
+        dest: 'dist/js/content.js'
+      },
+    },
     compress: {
       main: {
         options: {
@@ -79,7 +95,7 @@ module.exports = function(grunt) {
           {
             expand: true,
             cwd: 'dist/',
-            src: ['manifest.json', 'html/**', 'css/**', 'js/**']
+            src: ['manifest.json', 'html/**', 'css/**', 'js/background.js', 'js/content.js', 'js/popup.js']
           }
         ]
       }
@@ -89,6 +105,6 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.registerTask("default", ["clean:prodDist", "mkdir:prodDist", "babel:prod", "copy", "compress"]);
+  grunt.registerTask("default", ["clean:prodDist", "mkdir:prodDist", "babel:prod", "copy", "concat", "compress"]);
   grunt.registerTask("test", ["babel:prod", "clean:testDist", "mkdir:testDist", "babel:test", "qunit"]);
 };

@@ -1,0 +1,1 @@
+twemojifyNode(document.getElementsByTagName('body')[0]);
