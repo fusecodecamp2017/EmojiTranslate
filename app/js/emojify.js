@@ -17,6 +17,8 @@ function twemojifyNode(node) {
         textNode.textContent = textNode.textContent.replace(/heart/g, '\u2764');
         textNode.textContent = textNode.textContent.replace(/pencil/g, '\u270f');
         textNode.textContent = textNode.textContent.replace(/plus/g, '\u2795');
+        textNode.textContent = textNode.textContent.replace(/bread/g, '\uD83C\uDF5E');
+        textNode.textContent = textNode.textContent.replace(/banana/g, '\uD83C\uDF4C');
     });
     twemoji.parse(node);
 }
