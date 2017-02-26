@@ -35,3 +35,16 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
         return true;
     }
 });
+
+var createProperties = {
+    id: "createEmoji",
+    title: "Create Emoji for %s",
+    contexts: ["selection"]
+};
+chrome.contextMenus.create(createProperties, () => {})
+
+chrome.contextMenus.onClicked.addListener(function(info, tab) {
+    if (info.menuItemId === "createEmoji") {
+        console.log("Creating emoji for " + info.selectionText);
+    }
+});
