@@ -46,5 +46,13 @@ chrome.contextMenus.create(createProperties, () => {})
 chrome.contextMenus.onClicked.addListener(function(info, tab) {
     if (info.menuItemId === "createEmoji") {
         console.log("Creating emoji for " + info.selectionText);
+        var asciiAsString = prompt("Enter the desired Emoji's 4 character hex code below")
+        var ascii = String.fromCharCode(parseInt(asciiAsString,16));
+        getEmojis = getEmojis.then((emojis) => {
+            return emojis.concat([{
+                word: info.selectionText,
+                ascii: ascii
+            }])
+        });
     }
 });
