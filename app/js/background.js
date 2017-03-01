@@ -8,6 +8,9 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
     if( message === 'getEmojis' ) {
         getEmojis.then((emojis) => sendResponse(emojis));
         return true;
+    } else if( message === 'deleteAllEmojis' ) {
+        getEmojis = new Promise((resolve) => resolve([]));
+        chrome.storage.local.set({'emojis': []});
     }
 });
 
