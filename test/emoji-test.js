@@ -1,17 +1,3 @@
-QUnit.test('emojify replaces \'heart\' with heart emoji', function(assert) {
-    var text = "I heart you";
-    var emojifiedText = 'I <img class="emoji" draggable="false" alt="\u2764" src="https://twemoji.maxcdn.com/2/72x72/2764.png"> you';
-
-    assert.equal(emojify(text), emojifiedText);
-});
-
-QUnit.test('twemojify replaces unix emojii character codes with emojii images', function(assert) {
-    var text = 'I \u2764 you';
-    var emojifiedText = 'I <img class="emoji" draggable="false" alt="\u2764" src="https://twemoji.maxcdn.com/2/72x72/2764.png"> you';
-
-    assert.equal(twemojify(text), emojifiedText);
-});
-
 QUnit.test('twemojifyNode replaces all text node text within an html element with emojis', function(assert) {
     var html = document.createElement("html");
     var htmlText = document.createTextNode("What the heart");
@@ -42,7 +28,7 @@ QUnit.test('twemojifyNode replaces all text node text within an html element wit
     secondListItem.appendChild(secondListItemText);
     thirdListItem.appendChild(thirdListItemText);
 
-    twemojifyNode(html);
+    twemojifyNode(html, [{word: 'heart', ascii: '\u2764'}]);
 
     var htmlText = html.removeChild(html.firstChild);
     var htmlEmojiImg = html.removeChild(html.firstChild);
