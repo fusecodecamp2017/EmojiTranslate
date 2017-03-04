@@ -28,7 +28,7 @@ QUnit.test('twemojifyNode replaces all text node text within an html element wit
     secondListItem.appendChild(secondListItemText);
     thirdListItem.appendChild(thirdListItemText);
 
-    twemojifyNode(html, [{word: 'heart', ascii: '\u2764'}]);
+    twemojifyNode(html, [{text: 'heart', ascii: '\u2764'}]);
 
     var htmlText = html.removeChild(html.firstChild);
     var htmlEmojiImg = html.removeChild(html.firstChild);

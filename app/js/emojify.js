@@ -6,9 +6,9 @@ function twemojifyNode(node, emojis) {
     };
     textNodesUnder(node).forEach(function(textNode) {
         emojis.forEach(function(emojiMapping) {
-            var word = emojiMapping.word;
+            var text = emojiMapping.text;
             var ascii = emojiMapping.ascii;
-            var regexp = new RegExp(word, "gi");
+            var regexp = new RegExp(text, "gi");
             textNode.textContent = textNode.textContent.replace(regexp, ascii);
         })
     });

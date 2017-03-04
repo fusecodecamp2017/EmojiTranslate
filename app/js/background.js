@@ -5,13 +5,28 @@ var getEmojis = new Promise(function(resolve, reject) {
 });
 
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
-    if( message === 'getEmojis' ) {
+    console.log(message);
+    console.log(sender);
+    
+    var request = message.request;
+    if( request === 'getEmojis' ) {
         getEmojis.then((emojis) => sendResponse(emojis));
-        return true;
-    } else if( message === 'deleteAllEmojis' ) {
+    } else if( request  === 'deleteAllEmojis' ) {
         getEmojis = new Promise((resolve) => resolve([]));
         chrome.storage.local.set({'emojis': []});
+        sendResponse({result: "success"});
+    } else if( request === 'deleteEmoji' ) {
+        var text = message.text;
+        getEmojis = getEmojis.then((emojis) => {
+            emojis.splice(emojis.findIndex((emoji) => emoji.text === text), 1)
+            return emojis;
+        });
+        getEmojis.then((emojis) => {
+            chrome.storage.local.set({'emojis': emojis});
+        });
+        sendResponse({result: "success"});
     }
+    return true;
 });
 
 chrome.runtime.onInstalled.addListener(() => {
@@ -30,7 +45,7 @@ chrome.contextMenus.onClicked.addListener(function(info, tab) {
         var ascii = String.fromCharCode(parseInt(asciiAsString,16));
         getEmojis = getEmojis.then((emojis) => {
             return emojis.concat([{
-                word: info.selectionText,
+                text: info.selectionText,
                 ascii: ascii
             }])
         });
