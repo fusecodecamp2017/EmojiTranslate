@@ -89,7 +89,7 @@ module.exports = function(grunt) {
           {
             expand: true,
             cwd: 'dist/',
-            src: ['manifest.json', 'html/**', 'css/**', 'js/background.js', 'js/content.js', 'js/popup.js']
+            src: ['manifest.json', 'html/**', 'css/**', 'js/background.js', 'js/content.js', 'js/popup.js', 'js/twemoji-2.2.3.min.js']
           }
         ]
       }

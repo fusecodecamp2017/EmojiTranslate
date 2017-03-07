@@ -3,12 +3,11 @@ window.onload = () => {
         chrome.runtime.sendMessage({request: "deleteAllEmojis"});
     });
     chrome.runtime.sendMessage({request: "getEmojis"}, function(emojis) {
-        debugger;
+        var deleteEmojiTable = document.getElementById("deleteEmojiTable");
         emojis.forEach(function(emoji) {
             var ascii = emoji.ascii;
             var text = emoji.text;
 
-            var deleteEmojiTable = document.getElementById("deleteEmojiTable");
 
             var deleteEmojiRow = document.createElement("tr");
             var emojiColumn = document.createElement("td");
@@ -35,5 +34,7 @@ window.onload = () => {
 
             deleteEmojiTable.appendChild(deleteEmojiRow);
         });
+
+        twemoji.parse(deleteEmojiTable);
     });
 };
