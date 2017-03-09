@@ -75,10 +75,14 @@ module.exports = function(grunt) {
       options: {
         separator: '\n',
       },
-      dist: {
+      content: {
         src: ['dist/js/twemoji-2.2.3.min.js', 'dist/js/emojify.js', 'dist/js/content.js'],
         dest: 'dist/js/content.js'
       },
+      background: {
+        src: ['dist/js/background.js', 'dist/js/ascii-utils.js'],
+        dest: 'dist/js/background.js'
+      }
     },
     compress: {
       main: {
