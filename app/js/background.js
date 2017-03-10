@@ -42,7 +42,12 @@ chrome.runtime.onInstalled.addListener(() => {
 chrome.contextMenus.onClicked.addListener(function(info, tab) {
     if (info.menuItemId === "createEmoji") {
         var asciiAsString = prompt("Enter the desired Emoji's 4 character hex code below")
-        var ascii = String.fromCharCode(parseInt(asciiAsString,16));
+        var ascii = null;
+        if( asciiAsString.length === 4 ) {
+            ascii = String.fromCharCode(parseInt(asciiAsString,16));
+        } else if( asciiAsString.length === 5 ) {
+            ascii = surrogatePairs(asciiAsString);
+        }
         getEmojis = getEmojis.then((emojis) => {
             return emojis.concat([{
                 text: info.selectionText,
