@@ -1,6 +1,20 @@
 window.onload = () => {
-    chrome.runtime.sendMessage({request: "getEmojis"}, function(emojis) {
-        var deleteEmojiTable = document.getElementById("deleteEmojiTable");
+    renderPopup();
+};
+
+function renderPopup() {
+    var deleteEmojiTable = document.getElementById("deleteEmojiTable");
+    clearChildren(deleteEmojiTable);
+    var existingDeleteAllEmojisButton = document.getElementById("deleteAllEmojis");
+    var existingNoEmojisMessage = document.getElementById("noEmojisMessage");
+    var body = document.getElementsByTagName("body")[0];
+    if( existingDeleteAllEmojisButton ) {
+        body.removeChild(existingDeleteAllEmojisButton);
+    }
+    if( existingNoEmojisMessage ) {
+        body.removeChild(existingNoEmojisMessage);
+    }
+    getEmojis().then((emojis) => {
         emojis.forEach(function(emoji) {
             var ascii = emoji.ascii;
             var text = emoji.text;
@@ -25,7 +39,7 @@ window.onload = () => {
 
             deleteButton.addEventListener("click", function() {
                 chrome.runtime.sendMessage({request: "deleteEmoji", text: text}, function() {
-                    deleteEmojiTable.removeChild(deleteEmojiRow);
+                    renderPopup();
                 });
             });
 
@@ -33,17 +47,28 @@ window.onload = () => {
         });
 
         twemoji.parse(deleteEmojiTable);
-
-        var body = document.getElementsByTagName("body")[0];
-        if( emojis.length > 0 ) {
-            var deleteAllEmojisButton = createDeleteAllEmojisButton();
-            body.appendChild(deleteAllEmojisButton);
-        } else {
-            var noEmojisMessage = createNoEmojisMessage();
-            body.appendChild(noEmojisMessage);
-        }
+        renderFooter(emojis.length);
     });
-};
+}
+
+function getEmojis() {
+    return new Promise((resolve) => {
+        chrome.runtime.sendMessage({request: "getEmojis"}, function(emojis) {
+            resolve(emojis);
+        });
+    });
+}
+
+function renderFooter(emojisCount) {
+    var body = document.getElementsByTagName("body")[0];
+    if( emojisCount > 0 ) {
+        var deleteAllEmojisButton = createDeleteAllEmojisButton();
+        body.appendChild(deleteAllEmojisButton);
+    } else {
+        var noEmojisMessage = createNoEmojisMessage();
+        body.appendChild(noEmojisMessage);
+    }
+}
 
 function createDeleteAllEmojisButton() {
     var deleteAllEmojisButton = document.createElement("button");
@@ -51,14 +76,23 @@ function createDeleteAllEmojisButton() {
     var deleteAllEmojisText = document.createTextNode("Delete All");
     deleteAllEmojisButton.appendChild(deleteAllEmojisText);
     deleteAllEmojisButton.addEventListener('click', function() {
-        chrome.runtime.sendMessage({request: "deleteAllEmojis"});
+        chrome.runtime.sendMessage({request: "deleteAllEmojis"}, function() {
+            renderPopup();
+        });
     });
     return deleteAllEmojisButton;
 }
 
 function createNoEmojisMessage() {
     var noEmojisDiv = document.createElement("div");
+    noEmojisDiv.setAttribute("id", "noEmojisMessage")
     var noEmojisText = document.createTextNode("You haven't created any emojis yet!");
     noEmojisDiv.appendChild(noEmojisText);
     return noEmojisDiv;
+}
+
+function clearChildren(element) {
+    while (element.lastChild) {
+        element.removeChild(element.lastChild);
+    }
 }
