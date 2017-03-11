@@ -1,5 +1,6 @@
 body > * {
     margin: 4px;
+    width: 150px;
 }
 
 textarea {
@@ -11,4 +12,26 @@ img.emoji {
    width: 1em;
    margin: 0 .05em 0 .1em;
    vertical-align: -0.1em;
+}
+
+#deleteEmojiTable {
+    font-size: 20px;
+}
+
+#deleteEmojiTable tr td {
+    padding: 4px;
+}
+
+#deleteEmojiTable button {
+    font-size: 20px;
+}
+
+#deleteAllEmojis {
+    color: #ea0404;
+    font-size: 20px;
+}
+
+#emojiTranslate {
+    color: #f25252;
+    text-align: center
 }
