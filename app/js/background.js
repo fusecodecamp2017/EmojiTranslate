@@ -25,6 +25,15 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
             chrome.storage.local.set({'emojis': emojis});
         });
         sendResponse({result: "success"});
+    } else if( request === 'setPreferences' ) {
+        var preferences = message.preferences;
+        chrome.storage.local.set({'preferences': preferences});
+        sendResponse({result: "success"});
+    } else if( request === 'getPreferences' ) {
+        chrome.storage.local.get('preferences', function(obj) {
+            console.log(preferences);
+            sendResponse(obj.preferences || {});
+        });
     }
     return true;
 });

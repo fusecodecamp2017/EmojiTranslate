@@ -5,3 +5,7 @@ body {
 #saveButton {
     margin-top: 15px;
 }
+
+.hidden {
+    visibility: hidden;
+}
