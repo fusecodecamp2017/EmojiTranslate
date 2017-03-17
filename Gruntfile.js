@@ -80,7 +80,7 @@ module.exports = function(grunt) {
         dest: 'dist/js/content.js'
       },
       background: {
-        src: ['dist/js/background.js', 'dist/js/ascii-utils.js'],
+        src: ['dist/js/emoji-service.js', 'dist/js/ascii-utils.js', 'dist/js/background.js'],
         dest: 'dist/js/background.js'
       }
     },

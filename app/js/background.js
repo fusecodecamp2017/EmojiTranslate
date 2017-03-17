@@ -1,8 +1,4 @@
-var getEmojis = new Promise(function(resolve, reject) {
-    chrome.storage.local.get('emojis', function(emojis) {
-        resolve(emojis.emojis);
-    });
-});
+var emojiService = new EmojiService();
 
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
     console.log(message);
@@ -10,21 +6,13 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
     
     var request = message.request;
     if( request === 'getEmojis' ) {
-        getEmojis.then((emojis) => sendResponse(emojis));
+        emojiService.getEmojis().then((emojis) => sendResponse(emojis));
     } else if( request  === 'deleteAllEmojis' ) {
-        getEmojis = new Promise((resolve) => resolve([]));
-        chrome.storage.local.set({'emojis': []});
+        emojiService.deleteAllEmojis();
         sendResponse({result: "success"});
         refreshCurrentTabIfPreferenceSet();
     } else if( request === 'deleteEmoji' ) {
-        var text = message.text;
-        getEmojis = getEmojis.then((emojis) => {
-            emojis.splice(emojis.findIndex((emoji) => emoji.text === text), 1)
-            return emojis;
-        });
-        getEmojis.then((emojis) => {
-            chrome.storage.local.set({'emojis': emojis});
-        });
+        emojiService.deleteEmoji(message.text);
         sendResponse({result: "success"});
         refreshCurrentTabIfPreferenceSet();
     } else if( request === 'setPreferences' ) {
@@ -47,25 +35,13 @@ chrome.runtime.onInstalled.addListener(() => {
         contexts: ["selection"]
     };
     chrome.contextMenus.create(createProperties, () => {});
-    chrome.storage.local.set({'emojis': []})
+    emojiService.init();
 });
 
 chrome.contextMenus.onClicked.addListener(function(info, tab) {
     if (info.menuItemId === "createEmoji") {
         var asciiAsString = prompt("Enter the desired Emoji's 4 character hex code below")
-        var ascii = null;
-        if( asciiAsString.length === 4 ) {
-            ascii = String.fromCharCode(parseInt(asciiAsString,16));
-        } else if( asciiAsString.length === 5 ) {
-            ascii = surrogatePairs(asciiAsString);
-        }
-        getEmojis = getEmojis.then((emojis) => {
-            return emojis.concat([{
-                text: info.selectionText,
-                ascii: ascii
-            }])
-        });
-        getEmojis.then((emojis) => chrome.storage.local.set({'emojis': emojis}));
+        emojiService.createEmoji(info.selectionText, asciiAsString);
         refreshCurrentTabIfPreferenceSet()
     }
 });
