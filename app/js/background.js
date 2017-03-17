@@ -47,8 +47,8 @@ chrome.contextMenus.onClicked.addListener(function(info, tab) {
 });
 
 function refreshCurrentTabIfPreferenceSet() {
-    chrome.storage.local.get('preferences', function(obj) {
-        if( obj.preferences.reloadPage ) {
+    preferencesService.getPreferences().then((preferences) => {
+        if( preferences.reloadPage ) {
             chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
                 chrome.tabs.reload(tabs[0].id);
             });
