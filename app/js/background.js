@@ -15,6 +15,7 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
         getEmojis = new Promise((resolve) => resolve([]));
         chrome.storage.local.set({'emojis': []});
         sendResponse({result: "success"});
+        refreshCurrentTabIfPreferenceSet();
     } else if( request === 'deleteEmoji' ) {
         var text = message.text;
         getEmojis = getEmojis.then((emojis) => {
@@ -25,6 +26,7 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
             chrome.storage.local.set({'emojis': emojis});
         });
         sendResponse({result: "success"});
+        refreshCurrentTabIfPreferenceSet();
     } else if( request === 'setPreferences' ) {
         var preferences = message.preferences;
         chrome.storage.local.set({'preferences': preferences});
@@ -64,5 +66,16 @@ chrome.contextMenus.onClicked.addListener(function(info, tab) {
             }])
         });
         getEmojis.then((emojis) => chrome.storage.local.set({'emojis': emojis}));
+        refreshCurrentTabIfPreferenceSet()
     }
 });
+
+function refreshCurrentTabIfPreferenceSet() {
+    chrome.storage.local.get('preferences', function(obj) {
+        if( obj.preferences.reloadPage ) {
+            chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
+                chrome.tabs.reload(tabs[0].id);
+            });
+        }
+    });
+}
