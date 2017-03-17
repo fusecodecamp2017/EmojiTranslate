@@ -1,4 +1,5 @@
 var emojiService = new EmojiService();
+var preferencesService = new PreferencesService();
 
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
     console.log(message);
@@ -17,12 +18,11 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
         refreshCurrentTabIfPreferenceSet();
     } else if( request === 'setPreferences' ) {
         var preferences = message.preferences;
-        chrome.storage.local.set({'preferences': preferences});
+        preferencesService.setPreferences(preferences);
         sendResponse({result: "success"});
     } else if( request === 'getPreferences' ) {
-        chrome.storage.local.get('preferences', function(obj) {
-            console.log(preferences);
-            sendResponse(obj.preferences || {});
+        preferencesService.getPreferences().then((preferences) => {
+            sendResponse(preferences);
         });
     }
     return true;
