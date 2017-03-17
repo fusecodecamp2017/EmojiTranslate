@@ -1,16 +1,22 @@
 class EmojiService {
 
+    constructor() {
+        this.chromeStorage = new ChromeStorageService();
+    }
+
     init() {
-        chrome.storage.local.set({'emojis': []});
+//        chrome.storage.local.set({'emojis': []});
+        this.chromeStorage.set('emojis', []);
     }
 
     getEmojis() {
         if( !this.cachedEmojis ) {
-            this.cachedEmojis = new Promise((resolve) => {
-                chrome.storage.local.get('emojis', function(emojis) {
-                    resolve(emojis.emojis);
-                });
-            });
+//            this.cachedEmojis = new Promise((resolve) => {
+//                chrome.storage.local.get('emojis', function(emojis) {
+//                    resolve(emojis.emojis);
+//                });
+//            });
+            this.cachedEmojis = this.chromeStorage.get('emojis');
         }
         return this.cachedEmojis;
     }
@@ -28,7 +34,8 @@ class EmojiService {
                 ascii: ascii
             }])
         });
-        this.cachedEmojis.then((emojis) => chrome.storage.local.set({'emojis': emojis}));
+//        this.cachedEmojis.then((emojis) => chrome.storage.local.set({'emojis': emojis}));
+        this.cachedEmojis.then((emojis) => this.chromeStorage.set('emojis', emojis));
     }
 
     deleteEmoji(emojiText) {
@@ -36,14 +43,12 @@ class EmojiService {
             emojis.splice(emojis.findIndex((emoji) => emoji.text === emojiText), 1)
             return emojis;
         });
-        this.cachedEmojis.then((emojis) => {
-            chrome.storage.local.set({'emojis': emojis});
-        });
+        this.cachedEmojis.then((emojis) => this.chromeStorage.set('emojis', emojis));
     }
 
     deleteAllEmojis() {
         this.cachedEmojis = new Promise((resolve) => resolve([]));
-        chrome.storage.local.set({'emojis': []});
+        this.chromeStorage.set('emojis', []);
     }
 
 }
