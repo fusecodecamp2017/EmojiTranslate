@@ -5,17 +5,11 @@ class EmojiService {
     }
 
     init() {
-//        chrome.storage.local.set({'emojis': []});
         this.chromeStorage.set('emojis', []);
     }
 
     getEmojis() {
         if( !this.cachedEmojis ) {
-//            this.cachedEmojis = new Promise((resolve) => {
-//                chrome.storage.local.get('emojis', function(emojis) {
-//                    resolve(emojis.emojis);
-//                });
-//            });
             this.cachedEmojis = this.chromeStorage.get('emojis');
         }
         return this.cachedEmojis;
@@ -34,7 +28,6 @@ class EmojiService {
                 ascii: ascii
             }])
         });
-//        this.cachedEmojis.then((emojis) => chrome.storage.local.set({'emojis': emojis}));
         this.cachedEmojis.then((emojis) => this.chromeStorage.set('emojis', emojis));
     }
 

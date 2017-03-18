@@ -1,22 +1,22 @@
 class PreferencesService {
 
+    constructor() {
+        this.chromeStorage = new ChromeStorageService();
+    }
+
     init() {
         var defaultPreferences = {
             reloadPage: true
         };
-        chrome.storage.local.set({'preferences': defaultPreferences});
+        this.chromeStorage.set('preferences', defaultPreferences);
     }
 
     getPreferences() {
-        return new Promise((resolve) => {
-            chrome.storage.local.get('preferences', function(obj) {
-                resolve(obj.preferences || {});
-            });
-        });
+        return this.chromeStorage.get('preferences');
     }
 
     setPreferences(preferences) {
-        chrome.storage.local.set({'preferences': preferences});
+        this.chromeStorage.set('preferences', preferences);
     }
 
 }
