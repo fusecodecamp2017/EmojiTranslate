@@ -4,7 +4,7 @@ class ChromeStorageService {
         return new Promise((resolve) => {
             var obj = {};
             obj[key] = value;
-            chrome.storage.local.set(obj).then(() => {
+            this._chromeStorageSet(obj, function() {
                 resolve();
             });
         });
@@ -12,10 +12,18 @@ class ChromeStorageService {
 
     get(key) {
         return new Promise((resolve) => {
-            chrome.storage.local.get(key, function(value) {
+            this._chromeStorageGet(key, function(value) {
                 resolve(value[key]);
             });
         });
+    }
+
+    _chromeStorageSet(obj) {
+        chrome.storage.local.set(obj);
+    }
+
+    _chromeStorageGet(key, callback) {
+        chrome.storage.local.get(key, callback);
     }
 
 }

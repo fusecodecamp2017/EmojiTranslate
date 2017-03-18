@@ -44,7 +44,8 @@ module.exports = function(grunt) {
       },
       test: {
         files: {
-          'test/dist/emoji-test.js': 'test/emoji-test.js'
+          'test/dist/emoji-test.js': 'test/emoji-test.js',
+          'test/dist/ascii-utils-test.js': 'test/ascii-utils-test.js'
         }
       }
     },
@@ -79,7 +80,7 @@ module.exports = function(grunt) {
         dest: 'dist/js/content.js'
       },
       background: {
-        src: ['dist/js/emoji-service.js', 'dist/js/preferences-service.js', 'dist/js/ascii-utils.js', 'dist/js/background.js'],
+        src: ['dist/js/chrome-storage-service.js', 'dist/js/emoji-service.js', 'dist/js/preferences-service.js', 'dist/js/ascii-utils.js', 'dist/js/background.js'],
         dest: 'dist/js/background.js'
       }
     },
