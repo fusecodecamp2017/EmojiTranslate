@@ -1,0 +1,9 @@
+{
+  "manifest_version": 2,
+  "name": "Emoji Translate",
+  "description": "This extension replaces text in web pages with emojis",
+  "version": "1.0",
+  "browser_action": {
+    "default_popup": "popup.html"
+  }
+}
