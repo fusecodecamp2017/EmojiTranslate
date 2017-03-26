@@ -9,7 +9,7 @@
   "content_scripts": [
     {
       "js": [
-        "content.js"
+        "twemoji-2.2.3.min.js", "content.js"
       ],
       "matches": [
         "https://en.wikipedia.org/*"
