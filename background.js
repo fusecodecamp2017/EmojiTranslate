@@ -1,1 +1,3 @@
-console.log("Your name!");
+chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
+    sendResponse(new Date().toString());
+});
