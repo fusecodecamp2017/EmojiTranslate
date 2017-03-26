@@ -15,5 +15,11 @@
         "https://en.wikipedia.org/*"
       ]
     }
-  ]
+  ],
+  "background": {
+    "scripts": [
+      "background.js"
+    ],
+    "persistent": false
+  }
 }
