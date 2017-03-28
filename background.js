@@ -15,3 +15,12 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
     ]
     sendResponse(emojis);
 });
+
+chrome.runtime.onInstalled.addListener(() => {
+    var createProperties = {
+        id: "createEmoji",
+        title: "Create Emoji for %s",
+        contexts: ["selection"]
+    };
+    chrome.contextMenus.create(createProperties, () => {});
+});

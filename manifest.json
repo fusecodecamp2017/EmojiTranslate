@@ -21,5 +21,8 @@
       "background.js"
     ],
     "persistent": false
-  }
+  },
+  "permissions": [
+    "contextMenus"
+  ]
 }
