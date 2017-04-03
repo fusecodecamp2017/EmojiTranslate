@@ -24,3 +24,7 @@ chrome.runtime.onInstalled.addListener(() => {
     };
     chrome.contextMenus.create(createProperties, () => {});
 });
+
+chrome.contextMenus.onClicked.addListener(function(info, tab) {
+    alert("Emoji Translate!");
+});
