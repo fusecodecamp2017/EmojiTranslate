@@ -23,8 +23,17 @@ chrome.runtime.onInstalled.addListener(() => {
         contexts: ["selection"]
     };
     chrome.contextMenus.create(createProperties, () => {});
+    chrome.storage.local.set({"emojis": []});
 });
 
 chrome.contextMenus.onClicked.addListener(function(info, tab) {
-    alert("Emoji Translate!");
+    var asciiAsString = prompt("Enter the desired Emoji's hex code below");
+    var ascii = String.fromCharCode(parseInt(asciiAsString,16));
+    chrome.storage.local.get("emojis", function(obj) {
+        obj.emojis = obj.emojis.concat({
+            text: info.selectionText,
+            ascii: ascii
+        });
+        chrome.storage.local.set(obj);
+    });
 });

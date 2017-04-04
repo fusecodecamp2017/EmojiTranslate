@@ -23,6 +23,7 @@
     "persistent": false
   },
   "permissions": [
-    "contextMenus"
+    "contextMenus",
+    "storage"
   ]
 }
