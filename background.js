@@ -1,7 +1,11 @@
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
-    chrome.storage.local.get("emojis", function(obj) {
-        sendResponse(obj.emojis);
-    });
+    if( message === "getEmojis" ) {
+        chrome.storage.local.get("emojis", function(obj) {
+            sendResponse(obj.emojis);
+        });
+    } else if( message === "deleteAllEmojis" ) {
+        chrome.storage.local.set({"emojis": []});
+    }
     return true;
 });
 

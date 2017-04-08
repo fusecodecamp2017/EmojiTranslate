@@ -22,3 +22,8 @@ img.emoji {
     color: #f25252;
     text-align: center
 }
+
+#deleteAllEmojis {
+    color: #ea0404;
+    font-size: 20px;
+}

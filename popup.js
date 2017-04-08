@@ -3,7 +3,7 @@ window.onload = () => {
 };
 
 function renderPopup() {
-    chrome.runtime.sendMessage("", function(emojis) {
+    chrome.runtime.sendMessage("getEmojis", function(emojis) {
         var emojiTable = document.getElementById("emojiTable");
         emojis.forEach(function(emoji) {
             var ascii = emoji.ascii;
@@ -22,5 +22,21 @@ function renderPopup() {
 
             emojiTable.appendChild(emojiRow);
         });
+
+        var deleteAllEmojisButton = createDeleteAllEmojisButton();
+        var body = document.getElementsByTagName("body")[0];
+        body.appendChild(deleteAllEmojisButton);
     });
+}
+
+function createDeleteAllEmojisButton() {
+    var deleteAllEmojisButton = document.createElement("button");
+    deleteAllEmojisButton.setAttribute("id", "deleteAllEmojis");
+    var deleteAllEmojisText = document.createTextNode("Delete All");
+    deleteAllEmojisButton.appendChild(deleteAllEmojisText);
+    deleteAllEmojisButton.addEventListener('click', function() {
+        chrome.runtime.sendMessage("deleteAllEmojis", function() {
+        });
+    });
+    return deleteAllEmojisButton;
 }
