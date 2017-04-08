@@ -4,13 +4,17 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
             sendResponse(obj.emojis);
         });
     } else if( message.request === "deleteAllEmojis" ) {
-        chrome.storage.local.set({"emojis": []});
+        chrome.storage.local.set({"emojis": []}, function() {
+            sendResponse("");
+        });
     } else if( message.request === "deleteEmoji" ) {
         chrome.storage.local.get("emojis", function(obj) {
             var emojis = obj.emojis;
             var emojiTextToDelete = message.text;
             emojis.splice(emojis.findIndex((emoji) => emoji.text === emojiTextToDelete), 1);
-            chrome.storage.local.set({"emojis": emojis});
+            chrome.storage.local.set({"emojis": emojis}, function() {
+                sendResponse("");
+            });
         });
     }
     return true;
