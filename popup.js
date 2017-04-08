@@ -3,7 +3,7 @@ window.onload = () => {
 };
 
 function renderPopup() {
-    chrome.runtime.sendMessage("getEmojis", function(emojis) {
+    chrome.runtime.sendMessage({request: "getEmojis"}, function(emojis) {
         var emojiTable = document.getElementById("emojiTable");
         emojis.forEach(function(emoji) {
             var ascii = emoji.ascii;
@@ -14,11 +14,22 @@ function renderPopup() {
             var emojiText = document.createTextNode(ascii);
             var textColumn = document.createElement("td");
             var textText = document.createTextNode(text);
+            var deleteButtonColumn = document.createElement("td");
+            var deleteButton = document.createElement("button");
+            var deleteButtonText = document.createTextNode("Delete");
 
             emojiColumn.appendChild(emojiText);
             textColumn.appendChild(textText);
+            deleteButton.appendChild(deleteButtonText);
+            deleteButtonColumn.appendChild(deleteButton);
             emojiRow.appendChild(emojiColumn);
             emojiRow.appendChild(textColumn);
+            emojiRow.appendChild(deleteButtonColumn);
+
+            deleteButton.addEventListener("click", function() {
+                chrome.runtime.sendMessage({request: "deleteEmoji", text: text}, function() {
+                });
+            });
 
             emojiTable.appendChild(emojiRow);
         });
@@ -35,7 +46,7 @@ function createDeleteAllEmojisButton() {
     var deleteAllEmojisText = document.createTextNode("Delete All");
     deleteAllEmojisButton.appendChild(deleteAllEmojisText);
     deleteAllEmojisButton.addEventListener('click', function() {
-        chrome.runtime.sendMessage("deleteAllEmojis", function() {
+        chrome.runtime.sendMessage({request: "deleteAllEmojis"}, function() {
         });
     });
     return deleteAllEmojisButton;

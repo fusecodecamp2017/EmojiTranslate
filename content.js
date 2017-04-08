@@ -1,4 +1,4 @@
-chrome.runtime.sendMessage("getEmojis", function(emojis) {
+chrome.runtime.sendMessage({request: "getEmojis"}, function(emojis) {
     var textNodesUnder = function(el) {
       var n, a=[], walk=document.createTreeWalker(el,NodeFilter.SHOW_TEXT,null,false);
       while(n=walk.nextNode()) a.push(n);
