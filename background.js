@@ -18,6 +18,11 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
                 sendResponse("");
             });
         });
+    } else if( message.request === "setPreferences" ) {
+        var preferences = message.preferences;
+        chrome.storage.local.set({"preferences": preferences}, function() {
+            sendResponse("");
+        });
     }
     return true;
 });
