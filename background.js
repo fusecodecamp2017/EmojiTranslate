@@ -5,7 +5,7 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
         });
     } else if( message.request === "deleteAllEmojis" ) {
         chrome.storage.local.set({"emojis": []}, function() {
-            refreshCurrentTab();
+            refreshCurrentTabIfPreferenceSet();
             sendResponse("");
         });
     } else if( message.request === "deleteEmoji" ) {
@@ -14,7 +14,7 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
             var emojiTextToDelete = message.text;
             emojis.splice(emojis.findIndex((emoji) => emoji.text === emojiTextToDelete), 1);
             chrome.storage.local.set({"emojis": emojis}, function() {
-                refreshCurrentTab();
+                refreshCurrentTabIfPreferenceSet();
                 sendResponse("");
             });
         });
@@ -55,7 +55,7 @@ chrome.contextMenus.onClicked.addListener(function(info, tab) {
             ascii: ascii
         });
         chrome.storage.local.set(obj);
-        refreshCurrentTab();
+        refreshCurrentTabIfPreferenceSet();
     });
 });
 
@@ -75,8 +75,13 @@ function _hexNumberFromAsciiString(asciiString) {
     return parseInt(asciiString,16);
 }
 
-function refreshCurrentTab() {
-    chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
-        chrome.tabs.reload(tabs[0].id);
+function refreshCurrentTabIfPreferenceSet() {
+    chrome.storage.local.get("preferences", function(obj) {
+        var preferences = obj.preferences;
+        if( preferences.reloadPage ) {
+            chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
+                chrome.tabs.reload(tabs[0].id);
+            });
+        }
     });
 }
