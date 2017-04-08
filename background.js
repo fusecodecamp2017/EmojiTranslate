@@ -23,6 +23,10 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
         chrome.storage.local.set({"preferences": preferences}, function() {
             sendResponse("");
         });
+    } else if( message.request === 'getPreferences' ) {
+        chrome.storage.local.get("preferences", function(obj) {
+            sendResponse(obj.preferences);
+        });
     }
     return true;
 });
@@ -35,6 +39,7 @@ chrome.runtime.onInstalled.addListener(() => {
     };
     chrome.contextMenus.create(createProperties, () => {});
     chrome.storage.local.set({"emojis": []});
+    chrome.storage.local.set({"preferences": {reloadPage: true}});
 });
 
 chrome.contextMenus.onClicked.addListener(function(info, tab) {
