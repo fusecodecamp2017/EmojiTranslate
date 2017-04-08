@@ -5,3 +5,11 @@ body {
 #saveButton {
     margin: 15px 0 15px 0;
 }
+
+.hidden {
+    visibility: hidden;
+}
+
+#saveSuccessfulMessage {
+    color: green;
+}
