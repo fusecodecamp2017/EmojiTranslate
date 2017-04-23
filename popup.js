@@ -8,12 +8,16 @@ function renderPopup() {
         clearChildren(emojiTable);
         var existingDeleteAllEmojisButton = document.getElementById("deleteAllEmojis");
         var existingNoEmojisMessage = document.getElementById("noEmojisMessage");
+        var existingDisableEmojiSubstitution = document.getElementById("disableEmojiSubstitution");
         var body = document.getElementsByTagName("body")[0];
         if( existingDeleteAllEmojisButton ) {
             body.removeChild(existingDeleteAllEmojisButton);
         }
         if( existingNoEmojisMessage ) {
             body.removeChild(existingNoEmojisMessage);
+        }
+        if( existingDisableEmojiSubstitution ) {
+            body.removeChild(existingDisableEmojiSubstitution);
         }
         emojis.forEach(function(emoji) {
             var ascii = emoji.ascii;
@@ -35,7 +39,6 @@ function renderPopup() {
             emojiRow.appendChild(emojiColumn);
             emojiRow.appendChild(textColumn);
             emojiRow.appendChild(deleteButtonColumn);
-
             deleteButton.addEventListener("click", function() {
                 chrome.runtime.sendMessage({request: "deleteEmoji", text: text}, function() {
                     renderPopup();
@@ -54,6 +57,10 @@ function renderFooter(emojisCount) {
     if( emojisCount > 0 ) {
         var deleteAllEmojisButton = createDeleteAllEmojisButton();
         body.appendChild(deleteAllEmojisButton);
+        chrome.runtime.sendMessage({request: "getEmojiSubstitutionEnabled"}, function(emojiSubstitutionEnabled) {
+            var disableEmojiSubstitutionCheckbox = createDisableEmojiSubstitutionCheckbox(emojiSubstitutionEnabled);
+            body.appendChild(disableEmojiSubstitutionCheckbox);
+        });
     } else {
         var noEmojisMessage = createNoEmojisMessage();
         body.appendChild(noEmojisMessage);
@@ -71,6 +78,28 @@ function createDeleteAllEmojisButton() {
         });
     });
     return deleteAllEmojisButton;
+}
+
+function createDisableEmojiSubstitutionCheckbox(emojiSubstitutionEnabled) {
+    var div = document.createElement("div");
+    div.setAttribute("id", "disableEmojiSubstitution");
+    var checkboxInput = document.createElement("input");
+    checkboxInput.setAttribute("type", "checkbox");
+    checkboxInput.checked = !emojiSubstitutionEnabled;
+    checkboxInput.addEventListener("change", function(e) {
+        chrome.runtime.sendMessage({request: "setEmojiSubstitutionEnabled", emojiSubstitutionEnabled: !e.target.checked}, function() {});
+    });
+    var checkboxInputText = document.createTextNode("Disable Emojis");
+    div.appendChild(checkboxInput);
+    div.appendChild(checkboxInputText);
+    return div;
+}
+
+function createDisableEmojiSubstitutionCheckboxText() {
+    var checkboxInputTextSpan = document.createElement("span");
+    var checkboxInputText = document.createTextNode("Disable Emojis");
+    checkboxInputTextSpan.appendChild(checkboxInputText);
+    return checkboxInputTextSpan;
 }
 
 function createNoEmojisMessage() {

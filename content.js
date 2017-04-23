@@ -1,5 +1,7 @@
-chrome.runtime.sendMessage({request: "getEmojis"}, function(emojis) {
-    chrome.runtime.sendMessage({request: "getReplaceWholeWordsOnly"}, function(getReplaceWholeWordsOnly) {
+chrome.runtime.sendMessage({request: "emojiSubstitutionConfiguration"}, function(response) {
+    var emojis = response.emojis;
+    var replaceWholeWordsOnly = response.replaceWholeWordsOnly;
+    if( emojis.length > 0 ) {
         var textNodesUnder = function(el) {
           var n, a=[], walk=document.createTreeWalker(el,NodeFilter.SHOW_TEXT,null,false);
           while(n=walk.nextNode()) a.push(n);
@@ -9,7 +11,7 @@ chrome.runtime.sendMessage({request: "getEmojis"}, function(emojis) {
         textNodesUnder(body).forEach(function(textNode) {
             emojis.forEach(function(emoji) {
                 var regexp;
-                if( getReplaceWholeWordsOnly ) {
+                if( replaceWholeWordsOnly ) {
                     regexp = new RegExp("\\b" + emoji.text + "\\b", "gi");
                 } else {
                     regexp = new RegExp(emoji.text, "gi");
@@ -17,5 +19,5 @@ chrome.runtime.sendMessage({request: "getEmojis"}, function(emojis) {
                 textNode.textContent = textNode.textContent.replace(regexp, emoji.ascii);
             });
         });
-    });
+    }
 });

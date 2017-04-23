@@ -31,6 +31,31 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
         chrome.storage.local.get("preferences", function(obj) {
             sendResponse(obj.preferences.replaceWholeWordsOnly);
         });
+    } else if( message.request === 'setEmojiSubstitutionEnabled' ) {
+        chrome.storage.local.set({"emojiSubstitutionEnabled": message.emojiSubstitutionEnabled}, function() {
+            refreshCurrentTabIfPreferenceSet();
+            sendResponse("");
+        });
+    } else if( message.request === 'getEmojiSubstitutionEnabled' ) {
+        chrome.storage.local.get("emojiSubstitutionEnabled", function(obj) {
+            sendResponse(obj.emojiSubstitutionEnabled);
+        });
+    } else if( message.request === 'emojiSubstitutionConfiguration' ) {
+        chrome.storage.local.get("emojiSubstitutionEnabled", function(emojiSubstitutionEnabledObj) {
+            if( emojiSubstitutionEnabledObj.emojiSubstitutionEnabled ) {
+                chrome.storage.local.get("emojis", function(emojisObj) {
+                    chrome.storage.local.get("preferences", function(preferencesObj) {
+                        var response = {
+                            emojis: emojisObj.emojis,
+                            replaceWholeWordsOnly: preferencesObj.preferences.replaceWholeWordsOnly
+                        }
+                        sendResponse(response);
+                    });
+                });
+            } else {
+                sendResponse({emojis: []});
+            }
+        });
     }
     return true;
 });
@@ -43,6 +68,7 @@ chrome.runtime.onInstalled.addListener(() => {
     };
     chrome.contextMenus.create(createProperties, () => {});
     chrome.storage.local.set({"emojis": []});
+    chrome.storage.local.set({"emojiSubstitutionEnabled": true});
 
     var defaultPreferences = {
         reloadPage: true,
