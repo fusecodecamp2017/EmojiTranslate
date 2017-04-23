@@ -13,9 +13,9 @@ When the extension’s button (located in the top right corner of the browser) i
 
 ### Task 2: Create a content script
 Create a content script that displays your name on the browser page and logs it to the console.
-* Helpful Resources
+* Resources
   * [Content Scripts](https://developer.chrome.com/extensions/content_scripts)
-* JS DOM Functions (functions that change the webpage)
+* DOM Functions (functions that change the webpage)
   * [getElementsByTagName](https://www.w3schools.com/JSREF/met_document_getelementsbytagname.asp)
   * [createElement](https://www.w3schools.com/jsref/met_document_createelement.asp)
   * [createTextNode](https://www.w3schools.com/jsref/met_document_createtextnode.asp)
@@ -23,27 +23,26 @@ Create a content script that displays your name on the browser page and logs it 
 
 ### Task 3: Create an event page
 Have the event page log your name to the console.
-* Helpful Resources
+* Resources
   * [Event Pages](https://developer.chrome.com/extensions/event_pages)
-* JS Functions
+* Functions
   * [console.log](https://www.w3schools.com/js/js_output.asp)
 
 ### Task 4: Event/Content script communication
 Change the content script to request from the event script the current date, and display it via the content script.
-* Functions
+* Chrome Functions
   * [chrome.runtime.sendMessage](https://developer.chrome.com/extensions/runtime#method-sendMessage)
   * [chrome.runtime.onMessage.addListener](https://developer.chrome.com/extensions/runtime#event-onMessage)
-* JS Objects
+* Objects
   * [Date](https://www.w3schools.com/jsref/jsref_obj_date.asp)
 
 ### Task 5: Heart Emoji
 Change the content script to replace all instances of the word ‘heart’ on a webpage with the ascii character for the heart emoji.
-* Helpful Hints and Resources
+* Functions
+  * [String.replace](https://www.w3schools.com/jsref/jsref_replace.asp)
+* Hints
   * [Find all text nodes on a page](https://gist.github.com/cah-daniel-fischer/51877a2498ee9773b08ced074bc3d2c9)
   * You’ll want to iterate over all the text nodes in the document, and for each, perform the substitution
-* JS Functions
-  * [String.replace](https://www.w3schools.com/jsref/jsref_replace.asp)
-
 ### Task 6: Incorporate Twemoji
 Change the content script to use twemoji to replace ascii Emojis with images.
 * Hints and Resources
@@ -58,7 +57,7 @@ Size the emojis relative to surrounding text.
 
 ### Task 8: Fetch emojis from background script
 Change the content script to request emojis from the event script; hardcode some text-to-emoji mappings in the event script.
-* JS Objects
+* Objects
   * [Arrays](https://www.w3schools.com/js/js_arrays.asp)
   * [Objects](https://www.w3schools.com/js/js_object_definition.asp)
 
@@ -66,17 +65,18 @@ Change the content script to request emojis from the event script; hardcode some
 Create a context menu that can be applied to a selection (highlighted text) and reads “Create Emoji for <selected text>”.
 * Resources
   * [Declare Permissions](https://developer.chrome.com/extensions/declare_permissions)
-* JS Functions
+* Chrome Functions
   * [chrome.contextMenus.create](https://developer.chrome.com/extensions/contextMenus#method-create)
   * [chrome.runtime.onInstalled.addListener](https://developer.chrome.com/extensions/runtime#event-onInstalled) (context menu items should be configured on install)
-  * Hints
-    * Important createProperties are id, title and contexts
+* Hints
+  * Important createProperties are id, title and contexts
 
 ### Task 10: Context Menu listener
 Create a listener for the context menu that displays an alert box to the user.
 * Functions
-  * [chrome.contextMenus.onClicked.addListener](https://developer.chrome.com/extensions/contextMenus#event-onClicked)
   * [window.alert](https://www.w3schools.com/jsref/met_win_alert.asp)
+* Chrome Functions
+  * [chrome.contextMenus.onClicked.addListener](https://developer.chrome.com/extensions/contextMenus#event-onClicked)
 
 ### Task 11: Create an Emoji-to-text mapping
 Change the context menu listener to display a prompt modal.  When the OK button is clicked, the supplied **4 character** string should be converted to a character, and the text-to-emoji mapping should be saved in localstorage.
@@ -85,25 +85,29 @@ Change the context menu listener to display a prompt modal.  When the OK button 
   * [prompt](https://www.w3schools.com/jsref/met_win_prompt.asp)
   * [chrome.storage.local.get](https://developer.chrome.com/extensions/storage#method-StorageArea-get)
   * [chrome.storage.local.set](https://developer.chrome.com/extensions/storage#method-StorageArea-set)
+* Hints
+  * An important property of the info object is selectionText
+  * In order to save a new Emoji, you’ll need to “get” the Emojis currently saved, update them, and “set” them back in local storage
+  * [Example usage of local storage set and get](https://gist.github.com/cah-daniel-fischer/ab2703d95bf0fb77803400694f418cd5)
 
 ### Task 12: Read Emojis from local storage.
 Instead of returning hardcoded values to the content script, return the emojis saved in localstorage.
-* Functions
+* Chrome Functions
   * [chrome.storage.local.get](https://developer.chrome.com/extensions/storage#method-StorageArea-get)
 
 ### Task 13: Display saved Emojis in a table
 Change the popup to display the emoji mappings in a table.
-* HTML Elements
-  * [table](https://www.w3schools.com/html/html_tables.asp)
-* JS DOM Functions (functions that change HTML)
+* Functions
+  * [window.onload](https://developer.mozilla.org/en-US/docs/Web/API/GlobalEventHandlers/onload)
+* DOM Functions (functions that change HTML)
   * [getElementsByTagName](https://www.w3schools.com/JSREF/met_document_getelementsbytagname.asp) or [getElementById](https://www.w3schools.com/jsref/met_document_getelementbyid.asp)
   * [createElement](https://www.w3schools.com/jsref/met_document_createelement.asp)
   * [createTextNode](https://www.w3schools.com/jsref/met_document_createtextnode.asp)
   * [appendChild](https://www.w3schools.com/jsref/met_node_appendchild.asp)
-* JS Functions
-  * [window.onload](https://developer.mozilla.org/en-US/docs/Web/API/GlobalEventHandlers/onload)
-* JS Chrome functions
+* Chrome functions
   * [chrome.runtime.sendMessage](https://developer.chrome.com/extensions/runtime#method-sendMessage)
+* HTML
+  * [table](https://www.w3schools.com/html/html_tables.asp)
 * Hints
   * The gist of this task is you will send a message to the background script to retrieve the emoji data, then dynamically build out the table in the popup using javascript.  All of this will be written inside the window.onload function.
 
@@ -114,7 +118,7 @@ Support 5 character ASCII symbols, for example the ambulance Emoji (code 1F691).
 
 ### Task 15: Delete all Emojis
 Add a button to the popup that deletes all the emojis.
-* JS Functions
+* Functions
   * [getElementsByTagName](https://www.w3schools.com/JSREF/met_document_getelementsbytagname.asp)
   * [createElement](https://www.w3schools.com/jsref/met_document_createelement.asp)
   * [createTextNode](https://www.w3schools.com/jsref/met_document_createtextnode.asp)
@@ -123,15 +127,15 @@ Add a button to the popup that deletes all the emojis.
 * Chrome Functions
   * [chrome.runtime.sendMessage](https://developer.chrome.com/extensions/runtime#method-sendMessage)
   * [chrome.storage.local.set](https://developer.chrome.com/extensions/storage#method-StorageArea-set)
-* HTML Elements
+* HTML
   * [button](https://www.w3schools.com/tags/tag_button.asp)
 
 ### Task 16: Delete a single Emoji
 Add a button for each Emoji mapping that deletes only that Emoji mapping.
-* JS Functions
+* Functions
   * [splice](https://www.w3schools.com/jsref/jsref_splice.asp)
   * [findIndex](https://www.w3schools.com/jsref/jsref_findindex.asp)
-* JS DOM Functions
+* DOM Functions
   * [createElement](https://www.w3schools.com/jsref/met_document_createelement.asp)
   * [createTextNode](https://www.w3schools.com/jsref/met_document_createtextnode.asp)
   * [appendChild](https://www.w3schools.com/jsref/met_node_appendchild.asp)
@@ -141,7 +145,7 @@ Add a button for each Emoji mapping that deletes only that Emoji mapping.
 
 ### Task 17: Rerender the popup
 Update the popup in real time as Emojis are deleted.
-* JS DOM Functions
+* DOM Functions
   * [getElementById](https://www.w3schools.com/jsref/met_document_getelementbyid.asp)
   * [getElementsByTagName](https://www.w3schools.com/JSREF/met_document_getelementsbytagname.asp)
   * [removeChild](https://www.w3schools.com/jsref/met_node_removechild.asp)
@@ -152,7 +156,7 @@ Update the popup in real time as Emojis are deleted.
 
 ### Task 18: No Emojis message
 If no Emojis exist, show a message instead of the Delete All button.
-* JS DOM Functions
+* DOM Functions
   * [getElementById](https://www.w3schools.com/jsref/met_document_getelementbyid.asp)
   * [getElementsByTagName](https://www.w3schools.com/JSREF/met_document_getelementsbytagname.asp)
   * [setAttribute](https://www.w3schools.com/jsref/met_element_setattribute.asp)
@@ -162,13 +166,13 @@ If no Emojis exist, show a message instead of the Delete All button.
 
 ### Task 19: Refresh the webpage
 Refresh the opened tab when Emojis are created or deleted.
-* Chrome Functions
-  * [chrome.tabs.query](https://developer.chrome.com/extensions/tabs#method-query)
-  * [chrome.tabs.reload](https://developer.chrome.com/extensions/tabs#method-reload)
 * Resources
   * [Declare Permissions](https://developer.chrome.com/extensions/declare_permissions)
   * [Reloading the current tab](http://stackoverflow.com/questions/32570100/how-to-reload-current-tab-from-within-a-chrome-extension-popup-html#answer-40434371)
-
+* Chrome Functions
+  * [chrome.tabs.query](https://developer.chrome.com/extensions/tabs#method-query)
+  * [chrome.tabs.reload](https://developer.chrome.com/extensions/tabs#method-reload)
+  
 ### Task 20: Options Page
 Create an options page that simply displays your name.
 * Resources
@@ -183,9 +187,9 @@ Change the options menu to have a title, a checkbox for refreshing the current t
 
 ### Task 22: Save preferences to local storage
 When the save button is clicked, save the preference to local storage.
-* JS Functions
+* Functions
   * [window.onload](https://developer.mozilla.org/en-US/docs/Web/API/GlobalEventHandlers/onload)
-* JS DOM Functions
+* DOM Functions
   * [getElementById](https://www.w3schools.com/jsref/met_document_getelementbyid.asp)
   * [addEventListener](https://www.w3schools.com/jsref/met_element_addeventlistener.asp)
 * Chrome Functions
@@ -206,10 +210,10 @@ Modify the options page so that the checkbox is set correctly on page load.  By 
 
 ### Task 25: Save Successful message
 Add a success message at the bottom of the page when the preferences are successfully saved.  Make it disappear after a few seconds.
-* JS DOM Functions
-  * [getElementById](https://www.w3schools.com/jsref/met_document_getelementbyid.asp)
-* JS Functions
+* Functions
   * [setTimeout](https://www.w3schools.com/jsref/met_win_settimeout.asp)
   * [className](https://www.w3schools.com/jsref/prop_html_classname.asp) (property)
+* DOM Functions
+  * [getElementById](https://www.w3schools.com/jsref/met_document_getelementbyid.asp)
 * CSS
   * [visibility](https://www.w3schools.com/cssref/pr_class_visibility.asp)
