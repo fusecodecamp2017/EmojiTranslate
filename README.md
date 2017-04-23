@@ -51,36 +51,103 @@ Change the content script to use twemoji to replace ascii Emojis with images.
 
 ### Task 7: Size Emojis
 Size the emojis relative to surrounding text.
+* Hints and Resources
+  * [Twemoji Inline Styles](https://github.com/twitter/twemoji#user-content-inline-styles)
+  * [Content Scripts](https://developer.chrome.com/extensions/content_scripts)
 
 ### Task 8: Fetch emojis from background script
 Change the content script to request emojis from the event script; hardcode some text-to-emoji mappings in the event script.
+* JS Objects
+  * [Javascript Arrays](https://www.w3schools.com/js/js_arrays.asp)
+  * [Javascript Objects](https://www.w3schools.com/js/js_object_definition.asp)
 
 ### Task 9: Context Menu
 Create a context menu that can be applied to a selection (highlighted text) and reads “Create Emoji for <selected text>”.
+* Resources
+  * [Declare Permissions](https://developer.chrome.com/extensions/declare_permissions)
+* JS Functions
+  * [chrome.contextMenus.create](https://developer.chrome.com/extensions/contextMenus#method-create)
+  * [chrome.runtime.onInstalled.addListener](https://developer.chrome.com/extensions/runtime#event-onInstalled) (context menu items should be configured on install)
+  * Hints
+    * Important createProperties are id, title and contexts
 
 ### Task 10: Context Menu listener
 Create a listener for the context menu that displays an alert box to the user.
+* Functions
+  * [chrome.contextMenus.onClicked.addListener](https://developer.chrome.com/extensions/contextMenus#event-onClicked)
+  * [window.alert](https://www.w3schools.com/jsref/met_win_alert.asp)
 
 ### Task 11: Create an Emoji-to-text mapping
-Change the context menu listener to display a prompt modal.  When the OK button is clicked, the supplied 4 character string should be converted to a character, and the text-to-emoji mapping should be saved in localstorage.
+Change the context menu listener to display a prompt modal.  When the OK button is clicked, the supplied **4 character** string should be converted to a character, and the text-to-emoji mapping should be saved in localstorage.
+* Functions
+  * [chrome.contextMenus.onClicked.addListener](https://developer.chrome.com/extensions/contextMenus#event-onClicked)
+  * [prompt] (https://www.w3schools.com/jsref/met_win_prompt.asp)
+  * [chrome.storage.local.get] (https://developer.chrome.com/extensions/storage#method-StorageArea-get)
+  * [chrome.storage.local.set] (https://developer.chrome.com/extensions/storage#method-StorageArea-set)
 
 ### Task 12: Read Emojis from local storage.
 Instead of returning hardcoded values to the content script, return the emojis saved in localstorage.
+* Functions
+  * [chrome.storage.local.get] (https://developer.chrome.com/extensions/storage#method-StorageArea-get)
 
 ### Task 13: Display saved Emojis in a table
 Change the popup to display the emoji mappings in a table.
+* HTML Elements
+  * [table](https://www.w3schools.com/html/html_tables.asp)
+* JS DOM Functions (functions that change HTML)
+  * [getElementsByTagName](https://www.w3schools.com/JSREF/met_document_getelementsbytagname.asp) or [getElementById](https://www.w3schools.com/jsref/met_document_getelementbyid.asp)
+  * [createElement](https://www.w3schools.com/jsref/met_document_createelement.asp)
+  * [createTextNode](https://www.w3schools.com/jsref/met_document_createtextnode.asp)
+  * [appendChild](https://www.w3schools.com/jsref/met_node_appendchild.asp)
+* JS Functions
+  * [window.onload](https://developer.mozilla.org/en-US/docs/Web/API/GlobalEventHandlers/onload)
+* JS Chrome functions
+  * [chrome.runtime.sendMessage](https://developer.chrome.com/extensions/runtime#method-sendMessage)
+* Hints
+  * The gist of this task is you will send a message to the background script to retrieve the emoji data, then dynamically build out the table in the popup using javascript.  All of this will be written inside the window.onload function.
 
 ### Task 14: Support 5-character Emojis
 Support 5 character ASCII symbols, for example the ambulance Emoji (code 1F691).
+* Hints
+  * This one’s kinda tough, so I’m just going to give you the function to convert an ASCII string to surrogate pairs 😁: [surrogatePairs](https://gist.github.com/cah-daniel-fischer/58877b25f0e803ef6ee9f3533537321b)
 
 ### Task 15: Delete all Emojis
 Add a button to the popup that deletes all the emojis.
+* JS Functions
+  * [getElementsByTagName](https://www.w3schools.com/JSREF/met_document_getelementsbytagname.asp)
+  * [createElement](https://www.w3schools.com/jsref/met_document_createelement.asp)
+  * [createTextNode](https://www.w3schools.com/jsref/met_document_createtextnode.asp)
+  * [appendChild](https://www.w3schools.com/jsref/met_node_appendchild.asp)
+  * [addEventListener](https://www.w3schools.com/jsref/met_element_addeventlistener.asp)
+* Chrome Functions
+  * [chrome.runtime.sendMessage](https://developer.chrome.com/extensions/runtime#method-sendMessage)
+  * [Chrome.storage.local.set](https://developer.chrome.com/extensions/storage#method-StorageArea-set)
+* HTML Elements
+  * [button](https://www.w3schools.com/tags/tag_button.asp)
 
 ### Task 16: Delete a single Emoji
 Add a button for each Emoji mapping that deletes only that Emoji mapping.
+* JS Functions
+  * [splice]()
+  * [findIndex]()
+* JS DOM Functions
+  * [createElement](https://www.w3schools.com/jsref/met_document_createelement.asp)
+  * [createTextNode](https://www.w3schools.com/jsref/met_document_createtextnode.asp)
+  * [appendChild](https://www.w3schools.com/jsref/met_node_appendchild.asp)
+  * [addEventListener](https://www.w3schools.com/jsref/met_element_addeventlistener.asp)
+* Hints
+  * Our message to the background script will now require more than just the request type -- it will also require which emoji we wish to delete
 
 ### Task 17: Rerender the popup
 Update the popup in real time as Emojis are deleted.
+* JS DOM Functions
+  * [getElementById](https://www.w3schools.com/jsref/met_document_getelementbyid.asp)
+  * [getElementsByTagName](https://www.w3schools.com/JSREF/met_document_getelementsbytagname.asp)
+  * [removeChild](https://www.w3schools.com/jsref/met_node_removechild.asp)
+  * [setAttribute](https://www.w3schools.com/jsref/met_element_setattribute.asp)
+* Hints
+  * [Here’s a function for clearing all the children of an element](https://gist.github.com/cah-daniel-fischer/e219235bf09a6edfec5f4086364fd30b)
+  * Consider re-rendering the entire popup on delete rather than removing only the row that was deleted.
 
 ### Task 18: No Emojis message
 If no Emojis exist, show a message instead of the Delete All button.
