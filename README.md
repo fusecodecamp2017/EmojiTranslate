@@ -81,9 +81,9 @@ Create a listener for the context menu that displays an alert box to the user.
 Change the context menu listener to display a prompt modal.  When the OK button is clicked, the supplied **4 character** string should be converted to a character, and the text-to-emoji mapping should be saved in localstorage.
 * Functions
   * [chrome.contextMenus.onClicked.addListener](https://developer.chrome.com/extensions/contextMenus#event-onClicked)
-  * [prompt] (https://www.w3schools.com/jsref/met_win_prompt.asp)
-  * [chrome.storage.local.get] (https://developer.chrome.com/extensions/storage#method-StorageArea-get)
-  * [chrome.storage.local.set] (https://developer.chrome.com/extensions/storage#method-StorageArea-set)
+  * [prompt](https://www.w3schools.com/jsref/met_win_prompt.asp)
+  * [chrome.storage.local.get](https://developer.chrome.com/extensions/storage#method-StorageArea-get)
+  * [chrome.storage.local.set](https://developer.chrome.com/extensions/storage#method-StorageArea-set)
 
 ### Task 12: Read Emojis from local storage.
 Instead of returning hardcoded values to the content script, return the emojis saved in localstorage.
@@ -151,24 +151,64 @@ Update the popup in real time as Emojis are deleted.
 
 ### Task 18: No Emojis message
 If no Emojis exist, show a message instead of the Delete All button.
+* JS DOM Functions
+  * [getElementById](https://www.w3schools.com/jsref/met_document_getelementbyid.asp)
+  * [getElementsByTagName](https://www.w3schools.com/JSREF/met_document_getelementsbytagname.asp)
+  * [setAttribute](https://www.w3schools.com/jsref/met_element_setattribute.asp)
+  * [createElement](https://www.w3schools.com/jsref/met_document_createelement.asp)
+  * [createTextNode](https://www.w3schools.com/jsref/met_document_createtextnode.asp)
+  * [appendChild](https://www.w3schools.com/jsref/met_node_appendchild.asp)
 
 ### Task 19: Refresh the webpage
 Refresh the opened tab when Emojis are created or deleted.
+* Chrome Functions
+  * [chrome.tabs.query](https://developer.chrome.com/extensions/tabs#method-query)
+  * [chrome.tabs.reload](https://developer.chrome.com/extensions/tabs#method-reload)
+* Resources
+  * [Declare Permissions](https://developer.chrome.com/extensions/declare_permissions)
+  * [Reloading the current tab](http://stackoverflow.com/questions/32570100/how-to-reload-current-tab-from-within-a-chrome-extension-popup-html#answer-40434371)
 
 ### Task 20: Options Page
 Create an options page that simply displays your name.
+* Resources
+  * [Extension Options](https://developer.chrome.com/extensions/options)
 
 ### Task 21: Decorate the options page
 Change the options menu to have a title, a checkbox for refreshing the current tab when an emoji is created or deleted, and a save button at the bottom.  None of these have to be functional yet.
+* HTML
+  * [headings](https://www.w3schools.com/tags/tag_hn.asp)
+  * [checkbox](https://www.w3schools.com/jsref/dom_obj_checkbox.asp)
+  * [button](https://www.w3schools.com/tags/tag_button.asp)
 
 ### Task 22: Save preferences to local storage
 When the save button is clicked, save the preference to local storage.
+* JS Functions
+  * [window.onload](https://developer.mozilla.org/en-US/docs/Web/API/GlobalEventHandlers/onload)
+* JS DOM Functions
+  * [getElementById](https://www.w3schools.com/jsref/met_document_getelementbyid.asp)
+  * [addEventListener](https://www.w3schools.com/jsref/met_element_addeventlistener.asp)
+* Chrome Functions
+  * [chrome.runtime.sendMessage](https://developer.chrome.com/extensions/runtime#method-sendMessage)
+  * [chrome.storage.local.set](https://developer.chrome.com/extensions/storage#method-StorageArea-set)
 
 ### Task 23: Use the preference
 When Emojis are created or deleted, refresh the current tab if the preference is enabled.
+* Chrome Functions
+  * [chrome.storage.local.get](https://developer.chrome.com/extensions/storage#method-StorageArea-get)
 
 ### Task 24: Load options page with preference
 Modify the options page so that the checkbox is set correctly on page load.  By default, the preference should be enabled.
+* Chrome Functions
+  * [chrome.runtime.sendMessage](https://developer.chrome.com/extensions/runtime#method-sendMessage)
+  * [chrome.storage.local.get](https://developer.chrome.com/extensions/storage#method-StorageArea-get)
+  * [chrome.storage.local.set](https://developer.chrome.com/extensions/storage#method-StorageArea-set)
 
 ### Task 25: Save Successful message
 Add a success message at the bottom of the page when the preferences are successfully saved.  Make it disappear after a few seconds.
+* JS DOM Functions
+  * [getElementById](https://www.w3schools.com/jsref/met_document_getelementbyid.asp)
+* JS Functions
+  * [setTimeout](https://www.w3schools.com/jsref/met_win_settimeout.asp)
+  * [className](https://www.w3schools.com/jsref/prop_html_classname.asp) (property)
+* CSS
+  * [visibility](https://www.w3schools.com/cssref/pr_class_visibility.asp)
