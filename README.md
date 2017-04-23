@@ -7,8 +7,9 @@ Using HTML, Javascript, CSS, and the Chrome APIs, you'll write a Chrome Extensio
 ## Project Tasks
 ### Task 1: Create a popup
 When the extension’s button (located in the top right corner of the browser) is clicked, the html that appears should display your name.
-* [Chrome Extensions: Getting Started](https://developer.chrome.com/extensions/getstarted)
-* [Browser Actions](https://developer.chrome.com/extensions/browserAction)
+* Resources
+  * [Chrome Extensions: Getting Started](https://developer.chrome.com/extensions/getstarted)
+  * [Browser Actions](https://developer.chrome.com/extensions/browserAction)
 
 ### Task 2: Create a content script
 Create a content script that displays your name on the browser page and logs it to the console.
@@ -46,7 +47,7 @@ Change the content script to replace all instances of the word ‘heart’ on a 
 ### Task 6: Incorporate Twemoji
 Change the content script to use twemoji to replace ascii Emojis with images.
 * Hints and Resources
-  * To use Twemoji, download this file, copy it into your project and list it as a content script
+  * To use Twemoji, download [this file](http://twemoji.maxcdn.com/2/twemoji.min.js?2.2.3), copy it into your project and list it as a content script
   * twemoji.parse(document.body)
 
 ### Task 7: Size Emojis
@@ -58,8 +59,8 @@ Size the emojis relative to surrounding text.
 ### Task 8: Fetch emojis from background script
 Change the content script to request emojis from the event script; hardcode some text-to-emoji mappings in the event script.
 * JS Objects
-  * [Javascript Arrays](https://www.w3schools.com/js/js_arrays.asp)
-  * [Javascript Objects](https://www.w3schools.com/js/js_object_definition.asp)
+  * [Arrays](https://www.w3schools.com/js/js_arrays.asp)
+  * [Objects](https://www.w3schools.com/js/js_object_definition.asp)
 
 ### Task 9: Context Menu
 Create a context menu that can be applied to a selection (highlighted text) and reads “Create Emoji for <selected text>”.
@@ -88,7 +89,7 @@ Change the context menu listener to display a prompt modal.  When the OK button 
 ### Task 12: Read Emojis from local storage.
 Instead of returning hardcoded values to the content script, return the emojis saved in localstorage.
 * Functions
-  * [chrome.storage.local.get] (https://developer.chrome.com/extensions/storage#method-StorageArea-get)
+  * [chrome.storage.local.get](https://developer.chrome.com/extensions/storage#method-StorageArea-get)
 
 ### Task 13: Display saved Emojis in a table
 Change the popup to display the emoji mappings in a table.
@@ -121,15 +122,15 @@ Add a button to the popup that deletes all the emojis.
   * [addEventListener](https://www.w3schools.com/jsref/met_element_addeventlistener.asp)
 * Chrome Functions
   * [chrome.runtime.sendMessage](https://developer.chrome.com/extensions/runtime#method-sendMessage)
-  * [Chrome.storage.local.set](https://developer.chrome.com/extensions/storage#method-StorageArea-set)
+  * [chrome.storage.local.set](https://developer.chrome.com/extensions/storage#method-StorageArea-set)
 * HTML Elements
   * [button](https://www.w3schools.com/tags/tag_button.asp)
 
 ### Task 16: Delete a single Emoji
 Add a button for each Emoji mapping that deletes only that Emoji mapping.
 * JS Functions
-  * [splice]()
-  * [findIndex]()
+  * [splice](https://www.w3schools.com/jsref/jsref_splice.asp)
+  * [findIndex](https://www.w3schools.com/jsref/jsref_findindex.asp)
 * JS DOM Functions
   * [createElement](https://www.w3schools.com/jsref/met_document_createelement.asp)
   * [createTextNode](https://www.w3schools.com/jsref/met_document_createtextnode.asp)
