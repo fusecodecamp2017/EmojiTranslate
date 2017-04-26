@@ -3,7 +3,10 @@
 Using HTML, Javascript, CSS, and the Chrome APIs, you'll write a Chrome Extension that converts text in your browser into Emojis.  All you’ll need to complete this project is a laptop with the Chrome browser and your favorite code editor installed.  You'll come away from this project having gained experience using the aforementioned programming languages, a solid understanding of the anatomy of a Chrome Extension, and perhaps some new favorite Emojis.
 ## Requirements
 * The Chrome browser
-* A code editor
+* A code editor.  Any will do, but if you're looking for suggestions:
+  * [Sublime Text](https://www.sublimetext.com/) (Mac/Windows/Linux)
+  * [Caret](https://chrome.google.com/webstore/detail/caret/fljalecfjciodhpcledpamjachpmelml?hl=en) (Chromebook)
+  * [Zed](https://chrome.google.com/webstore/detail/zed-code-editor/pfmjnmeipppmcebplngmhfkleiinphhp?hl=en) (Chromebook)
 ## Project Tasks
 ### Task 1: Create a popup
 When the extension’s button (located in the top right corner of the browser) is clicked, the html that appears should display your name.
