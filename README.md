@@ -46,17 +46,6 @@ Change the content script to replace all instances of the word ‘heart’ on a 
 * Hints
   * [Find all text nodes on a page](https://gist.github.com/cah-daniel-fischer/51877a2498ee9773b08ced074bc3d2c9)
   * You’ll want to iterate over all the text nodes in the document, and for each, perform the substitution
-### Task 6: Incorporate Twemoji
-Change the content script to use twemoji to replace ascii Emojis with images.
-* Hints and Resources
-  * To use Twemoji, download [this file](http://twemoji.maxcdn.com/2/twemoji.min.js?2.2.3), copy it into your project and list it as a content script
-  * twemoji.parse(document.body)
-
-### Task 7: Size Emojis
-Size the emojis relative to surrounding text.
-* Hints and Resources
-  * [Twemoji Inline Styles](https://github.com/twitter/twemoji#user-content-inline-styles)
-  * [Content Scripts](https://developer.chrome.com/extensions/content_scripts)
 
 ### Task 8: Fetch emojis from background script
 Change the content script to request emojis from the event script; hardcode some text-to-emoji mappings in the event script.
