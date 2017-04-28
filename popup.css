@@ -1,0 +1,24 @@
+body > * {
+    margin: 4px;
+    width: 150px;
+}
+
+img.emoji {
+   height: 1em;
+   width: 1em;
+   margin: 0 .05em 0 .1em;
+   vertical-align: -0.1em;
+}
+
+#emojiTable {
+    font-size: 20px;
+}
+
+#emojiTable tr td {
+    padding: 4px;
+}
+
+#emojiTranslate {
+    color: #f25252;
+    text-align: center
+}
