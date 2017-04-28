@@ -11,9 +11,6 @@
       "js": [
         "content.js"
       ],
-      "css": [
-        "content.css"
-      ],
       "matches": [
         "https://en.wikipedia.org/*"
       ]
