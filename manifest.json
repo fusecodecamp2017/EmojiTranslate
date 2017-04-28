@@ -9,7 +9,7 @@
   "content_scripts": [
     {
       "js": [
-        "twemoji-2.2.3.min.js", "content.js"
+        "content.js"
       ],
       "css": [
         "content.css"

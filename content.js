@@ -8,4 +8,3 @@ textNodesUnder(body).forEach(function(textNode) {
     var regexp = new RegExp("heart", "gi");
     textNode.textContent = textNode.textContent.replace(regexp, '\u2764');
 });
-twemoji.parse(body);
