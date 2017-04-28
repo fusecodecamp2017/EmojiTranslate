@@ -27,6 +27,10 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
         chrome.storage.local.get("preferences", function(obj) {
             sendResponse(obj.preferences);
         });
+    } else if( message.request === 'getReplaceWholeWordsOnly' ) {
+        chrome.storage.local.get("preferences", function(obj) {
+            sendResponse(obj.preferences.replaceWholeWordsOnly);
+        });
     }
     return true;
 });
@@ -39,7 +43,12 @@ chrome.runtime.onInstalled.addListener(() => {
     };
     chrome.contextMenus.create(createProperties, () => {});
     chrome.storage.local.set({"emojis": []});
-    chrome.storage.local.set({"preferences": {reloadPage: true}});
+
+    var defaultPreferences = {
+        reloadPage: true,
+        replaceWholeWordsOnly: true
+    };
+    chrome.storage.local.set({"preferences": defaultPreferences});
 });
 
 chrome.contextMenus.onClicked.addListener(function(info, tab) {
