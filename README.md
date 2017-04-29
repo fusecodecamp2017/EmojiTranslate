@@ -16,7 +16,7 @@ When the extension’s button (located in the top right corner of the browser) i
   * [Browser Actions](https://developer.chrome.com/extensions/browserAction)
 
 ### Task 2: Create a content script
-Create a content script that displays your name on the browser page and logs it to the console.
+Create a content script that displays your name on the browser page and logs it to the console.  To sandbox our extension, only apply the content script to Wikipedia (“https://en.wikipedia.org/*”).
 * Resources
   * [Content Scripts](https://developer.chrome.com/extensions/content_scripts)
 * DOM Functions (functions that change the webpage)
@@ -82,6 +82,7 @@ Change the context menu listener to display a prompt modal.  When the OK button 
   * An important property of the info object is selectionText
   * In order to save a new Emoji, you’ll need to “get” the Emojis currently saved, update them, and “set” them back in local storage
   * [Example usage of local storage set and get](https://gist.github.com/cah-daniel-fischer/ab2703d95bf0fb77803400694f418cd5)
+  * [Function for converting an ascii string (“2b50”) into an ascii character (“⭐”)](https://gist.github.com/cah-daniel-fischer/643179e4a122aa1fb1d9fd7027b169db)
 
 ### Task 12: Read Emojis from local storage.
 Instead of returning hardcoded values to the content script, return the emojis saved in localstorage.
@@ -105,7 +106,7 @@ Change the popup to display the emoji mappings in a table.
   * The gist of this task is you will send a message to the background script to retrieve the emoji data, then dynamically build out the table in the popup using javascript.  All of this will be written inside the window.onload function.
 
 ### Task 14: Support 5-character Emojis
-Support 5 character ASCII symbols, for example the ambulance Emoji (code 1F691).
+Support 5 character ASCII symbols, for example the ambulance Emoji (code 1F691).  Also, if the input to the prompt is not 4 or 5 characters, display an error alert.
 * Hints
   * This one’s kinda tough, so I’m just going to give you the function to convert an ASCII string to surrogate pairs 😁: [surrogatePairs](https://gist.github.com/cah-daniel-fischer/58877b25f0e803ef6ee9f3533537321b)
 
@@ -135,6 +136,7 @@ Add a button for each Emoji mapping that deletes only that Emoji mapping.
   * [addEventListener](https://www.w3schools.com/jsref/met_element_addeventlistener.asp)
 * Hints
   * Our message to the background script will now require more than just the request type -- it will also require which emoji we wish to delete
+  * [Remove a value from a list](https://gist.github.com/cah-daniel-fischer/a61d8f332ee37d722ea64fb2b171eaed)
 
 ### Task 17: Rerender the popup
 Update the popup in real time as Emojis are deleted.
